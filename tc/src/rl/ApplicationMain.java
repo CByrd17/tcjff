@@ -1,20 +1,24 @@
 package rl;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
 
 import asciiPanel.AsciiPanel;
+import rl.screens.Screen;
+import rl.screens.StartScreen;
 
 /**
  * @author cbyrd17
  */
-public class ApplicationMain extends JFrame {
+public class ApplicationMain extends JFrame implements KeyListener {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9213642049164053735L;
 
 	/**
 	 * This is the display window that can display Ascii characters.
@@ -22,7 +26,12 @@ public class ApplicationMain extends JFrame {
 	private transient AsciiPanel terminal;
 
 	/**
-	 *  Code used in constructor and at deserialization time.
+	 * This is the current screen to show in the terminal.
+	 */
+	private transient Screen currentScreen;
+
+	/**
+	 * Code used in constructor and at deserialization time.
 	 */
 	private void initializeTerminal() {
 		terminal = new AsciiPanel();
@@ -30,13 +39,58 @@ public class ApplicationMain extends JFrame {
 		add(terminal);
 		pack();
 	}
-	
+
 	/**
 	 * 
 	 */
 	public ApplicationMain() {
 		super();
 		initializeTerminal();
+		currentScreen = new StartScreen();
+		currentScreen.displayOutput(terminal);
+		addKeyListener(this);
+	}
+
+	/**
+	 * (non-Javadoc).
+	 * 
+	 * @see java.awt.Component#repaint()
+	 */
+	public final void repaint() {
+		terminal.clear();
+		currentScreen.displayOutput(terminal);
+		super.repaint();
+	}
+
+	/**
+	 * (non-Javadoc).
+	 * 
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
+	@Override
+	public final void keyPressed(final KeyEvent keyEvent) {
+		currentScreen = currentScreen.respondToUserInput(keyEvent);
+		repaint();
+	}
+
+	/**
+	 * (non-Javadoc).
+	 * 
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
+	@Override
+	public void keyReleased(final KeyEvent keyEvent) {
+		// No use for keyReleased listener right now.
+	}
+
+	/**
+	 * (non-Javadoc).
+	 * 
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
+	@Override
+	public void keyTyped(final KeyEvent keyEvent) {
+		// No use for keyTyped listener right now.
 	}
 
 	/**
@@ -62,5 +116,4 @@ public class ApplicationMain extends JFrame {
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setVisible(true);
 	}
-
 }
