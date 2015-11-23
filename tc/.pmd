@@ -336,10 +336,6 @@
             <ruleset>Comments</ruleset>
         </rule>
         <rule>
-            <name>CommentSize</name>
-            <ruleset>Comments</ruleset>
-        </rule>
-        <rule>
             <name>AvoidAccessibilityAlteration</name>
             <ruleset>Controversial</ruleset>
         </rule>
