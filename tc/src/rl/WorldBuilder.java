@@ -8,6 +8,10 @@ package rl;
  *
  */
 public class WorldBuilder {
+	/**
+	 * How many times to run through the smoothing algorithm when building a
+	 * world.
+	 */
 	private static final int NUMBER_OF_TIMES_TO_SMOOTH = 8;
 
 	/**
@@ -32,6 +36,35 @@ public class WorldBuilder {
 	private Tile[][] tiles;
 
 	/**
+	 * @return the tiles
+	 */
+	public final Tile[][] getTiles() {
+		return tiles.clone();
+	}
+
+	/**
+	 * @param tilesToSet
+	 *            the tiles to set
+	 */
+	public final void setTiles(final Tile[]... tilesToSet) {
+		this.tiles = tilesToSet.clone();
+	}
+
+	/**
+	 * @return the width
+	 */
+	public final int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public final int getHeight() {
+		return height;
+	}
+
+	/**
 	 * @param desiredWidth
 	 *            how wide the world should be
 	 * @param desiredHeight
@@ -51,9 +84,9 @@ public class WorldBuilder {
 	}
 
 	/**
-	 * @return copy with filled in randomized tiles
+	 * 
 	 */
-	private WorldBuilder randomizeTiles() {
+	private void randomizeTiles() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				if (Math.random() < FLOOR_OR_WALL_CUTOFF) {
@@ -63,23 +96,20 @@ public class WorldBuilder {
 				}
 			}
 		}
-		return this;
 	}
 
 	/**
 	 * @param times
 	 *            how many times to run through the smoothing process
-	 * @return a WorldBuilder that has had its tiles modified to make more caves
-	 *         and passages vs totally random patterns of walls and floors
 	 */
-	private WorldBuilder smooth(final int times) {
-		Tile[][] tiles2 = new Tile[width][height];
+	private void smooth(final int times) {
+		Tile[][] tiles2 = new Tile[width][height]; // NOPMD
 		for (int time = 0; time < times; time++) {
 
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
-					int floors = 0;
-					int rocks = 0;
+					int floors = 0; // NOPMD
+					int rocks = 0; // NOPMD
 
 					for (int ox = -1; ox < 2; ox++) {
 						for (int oy = -1; oy < 2; oy++) {
@@ -89,31 +119,31 @@ public class WorldBuilder {
 							}
 
 							if (tiles[x + ox][y + oy] == Tile.FLOOR) {
-								floors++;
+								floors++; // NOPMD
 							} else {
-								rocks++;
+								rocks++; // NOPMD
 							}
 						}
 					}
+					Tile currentValue;
 					if (floors >= rocks) {
-						tiles2[x][y] = Tile.FLOOR;
+						currentValue = Tile.FLOOR;
 					} else {
-						tiles2[x][y] = Tile.WALL;
+						currentValue = Tile.WALL;
 					}
+					tiles2[x][y] = currentValue; // NOPMD
 				}
 			}
 			tiles = tiles2;
 		}
-		return this;
 	}
 
 	/**
-	 * @return a WorldBuilder with tiles full of caves
+	 * Makes caves in the world.
 	 */
-	public final WorldBuilder makeCaves() {
-		WorldBuilder wb = randomizeTiles();
-
-		return wb.smooth(NUMBER_OF_TIMES_TO_SMOOTH);
+	public final void makeCaves() {
+		randomizeTiles();
+		smooth(NUMBER_OF_TIMES_TO_SMOOTH);
 	}
 
 }
