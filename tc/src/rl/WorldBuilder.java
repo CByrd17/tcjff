@@ -74,6 +74,7 @@ public class WorldBuilder {
 		width = desiredWidth;
 		height = desiredHeight;
 		tiles = new Tile[desiredWidth][desiredHeight];
+		makeCaves();
 	}
 
 	/**

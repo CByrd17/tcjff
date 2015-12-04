@@ -13,24 +13,133 @@ import rl.WorldBuilder;
  * @author cbyrd17
  *
  */
-public class PlayScreen implements Screen {
+public class PlayScreen implements Screen { // NOPMD
 
+	/**
+	 * How high to make the screen.
+	 */
+	private static final int DEFAULT_SCREEN_HEIGHT = 21;
+
+	/**
+	 * How wide to make the screen.
+	 */
+	private static final int DEFAULT_SCREEN_WIDTH = 80;
+
+	/**
+	 * The state of the world at this time.
+	 */
 	private World world;
+
+	/**
+	 * The middle of the X axis for the screen.
+	 */
 	private int centerX;
+
+	/**
+	 * The middle of the Y axis for the screen.
+	 */
 	private int centerY;
+
+	/**
+	 * The width of the screen.
+	 */
 	private int screenWidth;
+
+	/**
+	 * The height of the screen.
+	 */
 	private int screenHeight;
 
+	/**
+	 * @return the world
+	 */
+	public final World getWorld() {
+		return world;
+	}
+
+	/**
+	 * @param worldToUse
+	 *            the world to set
+	 */
+	public final void setWorld(final World worldToUse) {
+		world = worldToUse;
+	}
+
+	/**
+	 * @return the centerX
+	 */
+	public final int getCenterX() {
+		return centerX;
+	}
+
+	/**
+	 * @param newCenterX
+	 *            the centerX to set
+	 */
+	public final void setCenterX(final int newCenterX) {
+		this.centerX = newCenterX;
+	}
+
+	/**
+	 * @return the centerY
+	 */
+	public final int getCenterY() {
+		return centerY;
+	}
+
+	/**
+	 * @param newCenterY
+	 *            the centerY to set
+	 */
+	public final void setCenterY(final int newCenterY) {
+		this.centerY = newCenterY;
+	}
+
+	/**
+	 * @return the screenWidth
+	 */
+	public final int getScreenWidth() {
+		return screenWidth;
+	}
+
+	/**
+	 * @param newScreenWidth
+	 *            the screenWidth to set
+	 */
+	public final void setScreenWidth(final int newScreenWidth) {
+		this.screenWidth = newScreenWidth;
+	}
+
+	/**
+	 * @return the screenHeight
+	 */
+	public final int getScreenHeight() {
+		return screenHeight;
+	}
+
+	/**
+	 * @param newScreenHeight
+	 *            the screenHeight to set
+	 */
+	public final void setScreenHeight(final int newScreenHeight) {
+		this.screenHeight = newScreenHeight;
+	}
+
+	/**
+	 * Constructor.
+	 */
 	public PlayScreen() {
-		screenWidth = 80;
-		screenHeight = 21;
+		screenWidth = DEFAULT_SCREEN_WIDTH;
+		screenHeight = DEFAULT_SCREEN_HEIGHT;
 		createWorld();
 	}
 
+	/**
+	 * Creates the world.
+	 */
 	private void createWorld() {
-		WorldBuilder wb = new WorldBuilder(90, 31);
-		wb.makeCaves();
-		world = wb.build();
+		final WorldBuilder worldBuilder = new WorldBuilder(90, 31);
+		world = new World(worldBuilder.getTiles());
 	}
 
 	/**
@@ -105,8 +214,8 @@ public class PlayScreen implements Screen {
 	 * @see rl.screens.Screen#respondToUserInput(java.awt.event.KeyEvent)
 	 */
 	@Override
-	public final Screen respondToUserInput(final KeyEvent key) {
-		Screen showThisScreen = this;
+	public final Screen respondToUserInput(final KeyEvent key) { // NOPMD
+		Screen showThisScreen = this; // NOPMD
 
 		switch (key.getKeyCode()) {
 		case KeyEvent.VK_ESCAPE:
