@@ -106,4 +106,17 @@ public class World {
 		this.height = tiles[0].length;
 	}
 
+	/**
+	 * @param xDigLocation
+	 *            the x value to try to dig through
+	 * @param yDigLocation
+	 *            the y value to try to dig through
+	 */
+	public final void dig(final int xDigLocation, final int yDigLocation) {
+		final Tile location = tile(xDigLocation, yDigLocation);
+		if (location.isDiggable()) {
+			tiles[xDigLocation][yDigLocation] = Tile.FLOOR;
+		}
+	}
+
 }

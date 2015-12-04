@@ -81,4 +81,11 @@ public enum Tile {
 		glyph = characterToUse;
 		color = colorToUse;
 	}
+
+	/**
+	 * @return can the tile be dug through?
+	 */
+	public boolean isDiggable() {
+		return this == Tile.WALL;
+	}
 }
