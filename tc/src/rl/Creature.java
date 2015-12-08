@@ -11,9 +11,12 @@ import java.awt.Color;
  */
 public class Creature {
 
-	private World world;
+	/**
+	 * This is the world that the creature is in.
+	 */
+	private final World world;
 
-	public int x;
+	private int xValue;
 	public int y;
 
 	private char glyph;
@@ -28,11 +31,11 @@ public class Creature {
 		return color;
 	}
 
-//	private CreatureAi ai;
-//	public void setCreatureAi(Creature aiToUse) {
-//		ai = aiToUse;
-//	}
-	
+	// private CreatureAi ai;
+	// public void setCreatureAi(Creature aiToUse) {
+	// ai = aiToUse;
+	// }
+
 	/**
 	 * 
 	 */
@@ -43,7 +46,14 @@ public class Creature {
 	}
 
 	public void dig(int wx, int wy) {
-	    world.dig(wx, wy);
+		world.dig(wx, wy);
 	}
-	
+
+	/**
+	 * @return the world
+	 */
+	public final World getWorld() {
+		return world;
+	}
+
 }
