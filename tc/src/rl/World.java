@@ -119,4 +119,9 @@ public class World {
 		}
 	}
 
+	public void addAtEmptyLocation(Creature player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

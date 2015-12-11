@@ -88,4 +88,11 @@ public enum Tile {
 	public boolean isDiggable() {
 		return this == Tile.WALL;
 	}
+
+	/**
+	 * @return is the tile ground?
+	 */
+	public boolean isGround() {
+		return this != WALL && this != BOUNDS;
+	}
 }
