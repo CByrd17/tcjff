@@ -6,6 +6,8 @@ package rl.screens;
 import java.awt.event.KeyEvent;
 
 import asciiPanel.AsciiPanel;
+import rl.Creature;
+import rl.CreatureFactory;
 import rl.World;
 import rl.WorldBuilder;
 
@@ -31,16 +33,6 @@ public class PlayScreen implements Screen { // NOPMD
 	private World world;
 
 	/**
-	 * The middle of the X axis for the screen.
-	 */
-	private int centerX;
-
-	/**
-	 * The middle of the Y axis for the screen.
-	 */
-	private int centerY;
-
-	/**
 	 * The width of the screen.
 	 */
 	private int screenWidth;
@@ -49,6 +41,26 @@ public class PlayScreen implements Screen { // NOPMD
 	 * The height of the screen.
 	 */
 	private int screenHeight;
+
+	/**
+	 * You.
+	 */
+	private Creature player;
+
+	/**
+	 * @return the player
+	 */
+	public final Creature getPlayer() {
+		return player;
+	}
+
+	/**
+	 * @param newPlayer
+	 *            the player to set
+	 */
+	public final void setPlayer(final Creature newPlayer) {
+		player = newPlayer;
+	}
 
 	/**
 	 * @return the world
@@ -63,36 +75,6 @@ public class PlayScreen implements Screen { // NOPMD
 	 */
 	public final void setWorld(final World worldToUse) {
 		world = worldToUse;
-	}
-
-	/**
-	 * @return the centerX
-	 */
-	public final int getCenterX() {
-		return centerX;
-	}
-
-	/**
-	 * @param newCenterX
-	 *            the centerX to set
-	 */
-	public final void setCenterX(final int newCenterX) {
-		this.centerX = newCenterX;
-	}
-
-	/**
-	 * @return the centerY
-	 */
-	public final int getCenterY() {
-		return centerY;
-	}
-
-	/**
-	 * @param newCenterY
-	 *            the centerY to set
-	 */
-	public final void setCenterY(final int newCenterY) {
-		this.centerY = newCenterY;
 	}
 
 	/**
@@ -132,6 +114,8 @@ public class PlayScreen implements Screen { // NOPMD
 		screenWidth = DEFAULT_SCREEN_WIDTH;
 		screenHeight = DEFAULT_SCREEN_HEIGHT;
 		createWorld();
+		final CreatureFactory creatureFactory = new CreatureFactory(world);
+		player = creatureFactory.newPlayer();
 	}
 
 	/**
@@ -146,7 +130,7 @@ public class PlayScreen implements Screen { // NOPMD
 	 * @return how far to scroll the window on the X axis
 	 */
 	public final int getScrollX() {
-		return Math.max(0, Math.min(centerX - screenWidth / 2,
+		return Math.max(0, Math.min(player.getXValue() - screenWidth / 2,
 				world.getWidth() - screenWidth));
 	}
 
@@ -154,7 +138,7 @@ public class PlayScreen implements Screen { // NOPMD
 	 * @return how far to scroll the window on the Y axis
 	 */
 	public final int getScrollY() {
-		return Math.max(0, Math.min(centerY - screenHeight / 2,
+		return Math.max(0, Math.min(player.getYValue() - screenHeight / 2,
 				world.getHeight() - screenHeight));
 	}
 
@@ -190,22 +174,11 @@ public class PlayScreen implements Screen { // NOPMD
 		final int top = getScrollY();
 
 		displayTiles(terminal, left, top);
-		terminal.write('X', centerX - left, centerY - top);
+		terminal.write(player.getGlyph(), player.getXValue() - left,
+				player.getYValue() - top);
 		terminal.write("You are having fun.", 1, 1);
 		terminal.writeCenter("-- press [escape] to lose or [enter] to win --",
 				MESSAGE_LINES_FROM_TOP);
-	}
-
-	/**
-	 * @param moveX
-	 *            the value to scroll by for the x axis
-	 * @param moveY
-	 *            the value to scroll by for the y axis
-	 */
-	private void scrollBy(final int moveX, final int moveY) {
-		centerX = Math.max(0, Math.min(centerX + moveX, world.getWidth() - 1));
-		centerY = Math.max(0,
-				Math.min(centerY + moveY, world.getHeight() - 1));
 	}
 
 	/**
@@ -226,31 +199,31 @@ public class PlayScreen implements Screen { // NOPMD
 			break;
 		case KeyEvent.VK_LEFT:
 		case KeyEvent.VK_H:
-			scrollBy(-1, 0);
+			player.moveBy(-1, 0);
 			break;
 		case KeyEvent.VK_RIGHT:
 		case KeyEvent.VK_L:
-			scrollBy(1, 0);
+			player.moveBy(1, 0);
 			break;
 		case KeyEvent.VK_UP:
 		case KeyEvent.VK_K:
-			scrollBy(0, -1);
+			player.moveBy(0, -1);
 			break;
 		case KeyEvent.VK_DOWN:
 		case KeyEvent.VK_J:
-			scrollBy(0, 1);
+			player.moveBy(0, 1);
 			break;
 		case KeyEvent.VK_Y:
-			scrollBy(-1, -1);
+			player.moveBy(-1, -1);
 			break;
 		case KeyEvent.VK_U:
-			scrollBy(1, -1);
+			player.moveBy(1, -1);
 			break;
 		case KeyEvent.VK_B:
-			scrollBy(-1, 1);
+			player.moveBy(-1, 1);
 			break;
 		case KeyEvent.VK_N:
-			scrollBy(1, 1);
+			player.moveBy(1, 1);
 			break;
 		default:
 			showThisScreen = this;

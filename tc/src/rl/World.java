@@ -114,14 +114,27 @@ public class World {
 	 */
 	public final void dig(final int xDigLocation, final int yDigLocation) {
 		final Tile location = tile(xDigLocation, yDigLocation);
-		if (location.isDiggable()) {
+		if (location.isDiggable()) { // NOPMD
 			tiles[xDigLocation][yDigLocation] = Tile.FLOOR;
 		}
 	}
 
-	public void addAtEmptyLocation(Creature player) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * @param creature
+	 *            the creature we're trying to place
+	 */
+	public final void addAtEmptyLocation(final Creature creature) {
+		int potentialXLocation;
+		int potentialYLocation;
+		Tile potentialLocation;
+		do {
+			potentialXLocation = (int) (Math.random() * width);
+			potentialYLocation = (int) (Math.random() * height);
+			potentialLocation = tile(potentialXLocation, potentialYLocation);
+		} while (!potentialLocation.isGround()); // NOPMD
+
+		creature.setXValue(potentialXLocation);
+		creature.setYValue(potentialYLocation);
 	}
 
 }

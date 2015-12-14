@@ -17,18 +17,18 @@ public class PlayerAi extends CreatureAi {
 		super(creatureInNeedOfAI);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * (non-Javadoc).
 	 * 
 	 * @see rl.CreatureAi#onEnter(int, int, rl.Tile)
 	 */
+	@Override
 	public final void onEnter(final int newXValue, final int newYValue,
 			final Tile tile) {
 		if (tile.isGround()) {
-			getCreature().setXValue(newXValue);
-			getCreature().setYValue(newYValue);
+			updateLocation(newXValue, newYValue);
 		} else if (tile.isDiggable()) {
-			getCreature().dig(newXValue, newYValue);
+			creatureDig(newXValue, newYValue);
 		}
 	}
 }

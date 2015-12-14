@@ -73,7 +73,6 @@ public class AppletMain extends Applet implements KeyListener {
 	 * @see java.awt.Component#repaint()
 	 */
 	public final void repaint() {
-		super.repaint();
 		terminal.clear();
 		currentScreen.displayOutput(terminal);
 		terminal.repaint();

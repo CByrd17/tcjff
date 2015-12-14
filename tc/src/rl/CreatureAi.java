@@ -50,4 +50,28 @@ public class CreatureAi {
 		// This will be overridden by extending classes
 	}
 
+	/**
+	 * @param newXValue
+	 *            x coordinate of the creature's new location
+	 * @param newYValue
+	 *            y coordinate of the creature's new location
+	 */
+	protected final void updateLocation(final int newXValue,
+			final int newYValue) {
+		creature.setXValue(newXValue);
+		creature.setYValue(newYValue);
+	}
+
+	/**
+	 * @param newXValue
+	 *            x coordinate of where the creature will try to dig
+	 * @param newYValue
+	 *            y coordinate of where the creature will try to dig
+	 */
+	protected final void creatureDig(final int newXValue,
+			final int newYValue) {
+		creature.dig(newXValue, newYValue);
+
+	}
+
 }
