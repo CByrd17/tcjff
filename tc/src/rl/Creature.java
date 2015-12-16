@@ -144,4 +144,5 @@ public class Creature {
 					world.tile(xValue + moveToX, yValue + moveToY));
 		}
 	}
+
 }

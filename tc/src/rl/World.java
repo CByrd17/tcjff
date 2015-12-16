@@ -4,6 +4,8 @@
 package rl;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author cbyrd17
@@ -25,6 +27,11 @@ public class World {
 	 * Used to store the height of the world at creation.
 	 */
 	private final int height;
+
+	/**
+	 * Creatures in the world.
+	 */
+	private List<Creature> creatures;
 
 	/**
 	 * @return a copy of the tiles that make up the world
@@ -97,13 +104,29 @@ public class World {
 	}
 
 	/**
+	 * @return the creatures
+	 */
+	public final List<Creature> getCreatures() {
+		return creatures;
+	}
+
+	/**
+	 * @param newCreatures
+	 *            the creatures to set
+	 */
+	public final void setCreatures(final List<Creature> newCreatures) {
+		creatures = newCreatures;
+	}
+
+	/**
 	 * @param tilesToUse
 	 *            a pre-filled set of tiles to create the world
 	 */
 	public World(final Tile[]... tilesToUse) {
 		tiles = (Tile[][]) tilesToUse.clone();
-		this.width = tiles.length;
-		this.height = tiles[0].length;
+		width = tiles.length;
+		height = tiles[0].length;
+		setCreatures(new ArrayList<Creature>());
 	}
 
 	/**
@@ -135,6 +158,25 @@ public class World {
 
 		creature.setXValue(potentialXLocation);
 		creature.setYValue(potentialYLocation);
+	}
+
+	/**
+	 * @param xLocation
+	 *            - x value to check for a creature
+	 * @param yLocation
+	 *            - y value to check for a creature
+	 * @return the creature, if any at this location; or null otherwise
+	 */
+	public final Creature getCreature(final int xLocation, // NOPMD
+			final int yLocation) {
+		Creature creature = null;
+		for (final Creature c : creatures) {
+			if (c.getXValue() == xLocation && c.getYValue() == yLocation) {
+				creature = c;
+				break;
+			}
+		}
+		return creature;
 	}
 
 }
