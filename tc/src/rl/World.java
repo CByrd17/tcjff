@@ -154,10 +154,13 @@ public class World {
 			potentialXLocation = (int) (Math.random() * width);
 			potentialYLocation = (int) (Math.random() * height);
 			potentialLocation = tile(potentialXLocation, potentialYLocation);
-		} while (!potentialLocation.isGround()); // NOPMD
+		} while (!potentialLocation.isGround() // NOPMD
+				|| getCreature(potentialXLocation,
+						potentialYLocation) != null);
 
 		creature.setXValue(potentialXLocation);
 		creature.setYValue(potentialYLocation);
+		creatures.add(creature);
 	}
 
 	/**
@@ -169,9 +172,10 @@ public class World {
 	 */
 	public final Creature getCreature(final int xLocation, // NOPMD
 			final int yLocation) {
-		Creature creature = null;
+		Creature creature = null; // NOPMD
 		for (final Creature c : creatures) {
-			if (c.getXValue() == xLocation && c.getYValue() == yLocation) {
+			if (c.getXValue() == xLocation // NOPMD
+					&& c.getYValue() == yLocation) { // NOPMD
 				creature = c;
 				break;
 			}
