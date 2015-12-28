@@ -42,4 +42,14 @@ public class CreatureFactory {
 		return player;
 	}
 
+	/**
+	 * @return a new creature that is a fungus
+	 */
+	public final Creature newFungus() {
+		final Creature fungus = new Creature(world, 'f', AsciiPanel.green);
+		world.addAtEmptyLocation(fungus);
+		new FungusAi(fungus);
+		return fungus;
+	}
+
 }

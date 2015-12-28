@@ -18,6 +18,11 @@ import rl.WorldBuilder;
 public class PlayScreen implements Screen { // NOPMD
 
 	/**
+	 * Default number of fungi to create.
+	 */
+	private static final int NUMBER_OF_FUNGI_TO_CREATE = 8;
+
+	/**
 	 * How high to make the screen.
 	 */
 	private static final int DEFAULT_SCREEN_HEIGHT = 21;
@@ -115,7 +120,19 @@ public class PlayScreen implements Screen { // NOPMD
 		screenHeight = DEFAULT_SCREEN_HEIGHT;
 		createWorld();
 		final CreatureFactory creatureFactory = new CreatureFactory(world);
+		createCreatures(creatureFactory);
+	}
+
+	/**
+	 * @param creatureFactory
+	 *            use this to instantiate creatures of different types
+	 */
+	private void createCreatures(final CreatureFactory creatureFactory) {
 		player = creatureFactory.newPlayer();
+
+		for (int i = 0; i < NUMBER_OF_FUNGI_TO_CREATE; i++) {
+			creatureFactory.newFungus();
+		}
 	}
 
 	/**
@@ -157,10 +174,61 @@ public class PlayScreen implements Screen { // NOPMD
 				final int worldX = x + left;
 				final int worldY = y + top;
 
-				terminal.write(world.glyph(worldX, worldY), x, y,
-						world.color(worldX, worldY));
+				writeOutTile(worldX, worldY, left, top, terminal, x, y);
 			}
 		}
+	}
+
+	/**
+	 * @param worldX
+	 *            the x coordinate of tile in the world coordinate system
+	 * @param worldY
+	 *            the y coordinate of tile in the world coordinate system
+	 * @param left
+	 *            the offset from the left side of the displayed world
+	 * @param top
+	 *            the offset from the top side of the displayed world
+	 * @param terminal
+	 *            where to write the tile
+	 * @param terminalX
+	 *            the x coordinate in the terminal of where to write the glyph
+	 * @param terminalY
+	 *            the y coordinate in the terminal of where to write the glyph
+	 */
+	private void writeOutTile(final int worldX, final int worldY,
+			final int left, final int top, final AsciiPanel terminal,
+			final int terminalX, final int terminalY) {
+		Creature creature = world.getCreature(worldX, worldY);
+		if (isValid(creature)) {
+			System.out.println(creature.getXValue() + " "
+					+ creature.getYValue() + " " + left + " " + top);
+		} else {
+			System.out.println(worldX + " " + worldY);
+		}
+		if (isValid(creature)) {
+			creature = new Creature(creature);
+			terminal.write(creature.getGlyph(), creature.getXValue() + left,
+					creature.getYValue() + top, creature.getColor());
+		} else {
+			terminal.write(world.glyph(worldX, worldY), terminalX, terminalY,
+					world.color(worldX, worldY));
+		}
+
+	}
+
+	/**
+	 * @param creature
+	 *            the Creature to check for null
+	 * @return if the creature is null or not
+	 */
+	private boolean isValid(final Creature creature) {
+		boolean valid;
+		if (creature == null) {
+			valid = false;
+		} else {
+			valid = true;
+		}
+		return valid;
 	}
 
 	/**

@@ -123,6 +123,15 @@ public class Creature {
 	}
 
 	/**
+	 * @param oldCreature
+	 *            make a new creature with this old one
+	 */
+	public Creature(final Creature oldCreature) {
+		this(oldCreature.getWorld(), oldCreature.getGlyph(),
+				oldCreature.getColor());
+	}
+
+	/**
 	 * @param worldXLocation
 	 *            horizontal location in the world to try to dig
 	 * @param worldYLocation
