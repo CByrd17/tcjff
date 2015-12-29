@@ -74,4 +74,22 @@ public class CreatureAi {
 
 	}
 
+	/**
+	 * @param xValue
+	 *            x coordinate of a location to check if the creature may enter
+	 * @param yValue
+	 *            y coordinate of a location to check if the creature may enter
+	 * @return can the creature enter
+	 */
+	public final boolean isClear(final int xValue, final int yValue) {
+		return creature.canEnter(xValue, yValue);
+	}
+
+	/**
+	 * Updates will be handled by extending AI's.
+	 */
+	public void onUpdate() {
+		// For use by extending AI's
+	}
+
 }

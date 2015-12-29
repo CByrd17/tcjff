@@ -168,10 +168,51 @@ public class Creature {
 	 *            move to the tile in this y location
 	 */
 	public final void moveBy(final int moveToX, final int moveToY) {
-		if (artificialIntelligence != null) {
+		final Creature other = world.getCreature(getXValue() + moveToX,
+				getYValue() + moveToY);
+
+		if (other == null) {
 			artificialIntelligence.onEnter(xValue + moveToX, yValue + moveToY,
 					world.tile(xValue + moveToX, yValue + moveToY));
+		} else {
+			attack(other);
 		}
+	}
+
+	/**
+	 * @param other
+	 *            a creature that this creature is attacking
+	 */
+	private void attack(final Creature other) {
+		world.remove(other);
+	}
+
+	/**
+	 * For when a creature gets a chance to act.
+	 */
+	public final void update() {
+		artificialIntelligence.onUpdate();
+	}
+
+	/**
+	 * @param worldX
+	 *            x coordinate to check for availability of the tile
+	 * @param worldY
+	 *            y coordinate to check for availability of the tile
+	 * @return true if tile is available to enter
+	 */
+	public final boolean canEnter(final int worldX, final int worldY) {
+		return isGround(world.tile(worldX, worldY))
+				&& world.getCreature(worldX, worldY) == null;
+	}
+
+	/**
+	 * @param tileToCheck
+	 *            a tile to check whether or not it is open ground
+	 * @return result of the check for open ground
+	 */
+	private boolean isGround(final Tile tileToCheck) {
+		return tileToCheck.isGround();
 	}
 
 }

@@ -183,4 +183,22 @@ public class World {
 		return creature;
 	}
 
+	/**
+	 * @param other
+	 *            the creature to remove from the world (probably due to its
+	 *            death)
+	 */
+	public final void remove(final Creature other) {
+		creatures.remove(other);
+	}
+
+	/**
+	 * Makes all the creatures do their things.
+	 */
+	public final void update() { // NOPMD
+		for (final Creature creature : creatures) {
+			creature.update();
+		}
+	}
+
 }
