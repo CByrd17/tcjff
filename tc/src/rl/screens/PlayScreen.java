@@ -200,15 +200,9 @@ public class PlayScreen implements Screen { // NOPMD
 			final int terminalX, final int terminalY) {
 		Creature creature = world.getCreature(worldX, worldY);
 		if (isValid(creature)) {
-			System.out.println(creature.getXValue() + " "
-					+ creature.getYValue() + " " + left + " " + top);
-		} else {
-			System.out.println(worldX + " " + worldY);
-		}
-		if (isValid(creature)) {
 			creature = new Creature(creature);
-			terminal.write(creature.getGlyph(), creature.getXValue() + left,
-					creature.getYValue() + top, creature.getColor());
+			terminal.write(creature.getGlyph(), creature.getXValue() - left,
+					creature.getYValue() - top, creature.getColor());
 		} else {
 			terminal.write(world.glyph(worldX, worldY), terminalX, terminalY,
 					world.color(worldX, worldY));
@@ -242,9 +236,7 @@ public class PlayScreen implements Screen { // NOPMD
 		final int top = getScrollY();
 
 		displayTiles(terminal, left, top);
-		terminal.write(player.getGlyph(), player.getXValue() - left,
-				player.getYValue() - top);
-		terminal.write("You are having fun.", 1, 1);
+
 		terminal.writeCenter("-- press [escape] to lose or [enter] to win --",
 				MESSAGE_LINES_FROM_TOP);
 	}

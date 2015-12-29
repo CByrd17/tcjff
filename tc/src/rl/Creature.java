@@ -123,12 +123,32 @@ public class Creature {
 	}
 
 	/**
+	 * @param worldToUse
+	 *            where this creature will exist
+	 * @param glyphToUse
+	 *            the character will represent the creature
+	 * @param colorToUse
+	 *            the color of the creature
+	 * @param xToUse
+	 *            x coordinate of the new creature
+	 * @param yToUse
+	 *            y coordinate of the new creature
+	 */
+	public Creature(final World worldToUse, final char glyphToUse,
+			final Color colorToUse, final int xToUse, final int yToUse) {
+		this(worldToUse, glyphToUse, colorToUse);
+		xValue = xToUse;
+		yValue = yToUse;
+	}
+
+	/**
 	 * @param oldCreature
 	 *            make a new creature with this old one
 	 */
 	public Creature(final Creature oldCreature) {
 		this(oldCreature.getWorld(), oldCreature.getGlyph(),
-				oldCreature.getColor());
+				oldCreature.getColor(), oldCreature.getXValue(),
+				oldCreature.getYValue());
 	}
 
 	/**
